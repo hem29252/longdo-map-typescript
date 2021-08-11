@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const DisplayMap = () => {
     const [vaccine, setVaccine] = useState<typeVaccine[]>([])
+    //
     const [country, setCountry] = useState<string>()
     const [geocode, setGeocode] = useState<string>("")
     const [province, setProvince] = useState<string>("")
@@ -14,6 +15,13 @@ const DisplayMap = () => {
     const [postcode, setPostcode] = useState<string>("")
     const [elevation, setElevation] = useState<number | undefined>()
     const [road, setRoad] = useState<String>("")
+
+    //
+    const [email, setEmail] = useState<string>("")
+    const [vaccineName, setVaccineName] = useState<string>("")
+    const [amount, setAmount] = useState<number>(0)
+    const [tel, setTel] = useState<string>("")
+
     // longdo key api
     const mapKey: string = 'f065b431c7c8afab7264d32ca7a8a11e'
 
@@ -45,23 +53,20 @@ const DisplayMap = () => {
         }, 1000)
     }
 
-    const mapLatLonToAddress = async (lat: number,lon:number) => {
+    const mapLatLonToAddress = async (lat: number, lon: number) => {
         await axios(`https://api.longdo.com/map/services/address?lon=${lon}&lat=${lat}&key=f065b431c7c8afab7264d32ca7a8a11e`)
-        .then((res) => {
-            setCountry(res.data.country)
-            setProvince(res.data.province)
-            setGeocode(res.data.geocode)
-            setDistrict(res.data.district)
-            setSubdistrict(res.data.subdistrict)
-            setPostcode(res.data.postcode)
-            setElevation(res.data.elevation)
-            setRoad(res.data.road)
-            console.log(res.data)
-
-        })
-      }
-
-
+            .then((res) => {
+                setCountry(res.data.country)
+                setProvince(res.data.province)
+                setGeocode(res.data.geocode)
+                setDistrict(res.data.district)
+                setSubdistrict(res.data.subdistrict)
+                setPostcode(res.data.postcode)
+                setElevation(res.data.elevation)
+                setRoad(res.data.road)
+                console.log(res.data)
+            })
+    }
 
     // set marker vaccine
     const setMarker = () => {
@@ -73,6 +78,10 @@ const DisplayMap = () => {
                 if (overlay === vaccineList[index]) {
                     mapLatLonToAddress(item.lat, item.long)
                     showDrawer()
+                    setEmail(item.email)
+                    setVaccineName(item.name)
+                    setAmount(item.amount)
+                    setTel(item.tel)
                 }
             });
         })
@@ -82,7 +91,6 @@ const DisplayMap = () => {
     useEffect(() => {
         fecthVaccineData()
     }, [vaccine.length, country, province, geocode, district])
-
 
     return (
         <div>
@@ -106,12 +114,19 @@ const DisplayMap = () => {
                     </div>
                 }
             >
-        <p>{ country }</p>
-        <p>{ province }</p>
-        <p>{ geocode }</p>
-        <p>{ district }</p>
+                <p>country:  {country}</p>
+                <p>province: {province}</p>
+                <p>geocode: {geocode}</p>
+                <p>district: {district}</p>
+                <p>subdistrict: {subdistrict}</p>
+                <p>postcode: {postcode}</p>
+                <p>elevation: {elevation}</p>
+                <p>vaccineName: {vaccineName}</p>
+                <p>email: {email}</p>
+                <p>amount: { amount }</p>
+                <p>tel: { tel }</p>
+                
 
-        
             </Drawer>
         </div>
     )

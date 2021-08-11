@@ -31,7 +31,7 @@ export class LongdoMap extends React.Component<Props, State>{
   componentDidMount() {
     const existingScript = document.getElementById('longdoMapScript');
     const callback = this.props.callback
-
+    
     if (!existingScript) {
       const script = document.createElement('script');
       script.src = `https://api.longdo.com/map/?key=${this.props.mapKey}`;
@@ -50,7 +50,7 @@ export class LongdoMap extends React.Component<Props, State>{
 
   render() {
     return (
-        <div id={this.props.id} style={{width:'100%', height:'200px'}}>
+        <div id={this.props.id} style={{width:'100%', height:'500px'}}>
         </div>
     );
   }
