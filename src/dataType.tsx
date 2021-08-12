@@ -1,10 +1,14 @@
 export type typeUsers = {
-    id: number
-    firstname: string,
-    lastname: string,
-    username: string
-    password: string
-    email: string
+  id: number;
+  user_id: number;
+  name: string;
+  amount: number;
+  email: string;
+  tel: string;
+  lat: number;
+  long: number;
+  description: string;
+  createAt: Date;
 }
 
 export type typeVaccine = {
@@ -18,13 +22,15 @@ export type typeVaccine = {
     description: string,
 }
 
-export type typeDeocode = {
-    geocode: string,
-    province: string,
-    district: string,
-    subdistrict: string,
-    postcode: string,
-    elevation: number,
-    road: string
-}
+export const getCurrentLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          resolve([position.coords.latitude, position.coords.longitude]);
+        });
+      } else {
+        console.log("Geolocation is not supported by this browser.")
+      }
+    })
+  } 
 

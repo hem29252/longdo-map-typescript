@@ -13,7 +13,7 @@ type State = {
 
 }
 
-export class LongdoMap extends React.Component<Props, State>{
+export class LondogMapNewVaccine extends React.Component<Props, State>{
   constructor(props :Props) {
     super(props);
     this.mapCallback = this.mapCallback.bind(this);
